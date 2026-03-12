@@ -1,0 +1,55 @@
+# 8 Puzzle Problem – Step by Step Solution
+
+goal = [[1,2,3],
+        [4,5,6],
+        [7,8,0]]
+
+# Function to print puzzle
+def print_puzzle(state):
+    for row in state:
+        print(row)
+    print()
+
+# Find blank space
+def find_blank(state):
+    for i in range(3):
+        for j in range(3):
+            if state[i][j] == 0:
+                return i, j
+
+# Move blank tile
+def move(state, x, y, nx, ny):
+    new_state = [row[:] for row in state]
+    new_state[x][y], new_state[nx][ny] = new_state[nx][ny], new_state[x][y]
+    return new_state
+
+# Solve puzzle
+def solve(start):
+    current = start
+    step = 0
+    
+    while current != goal:
+        print("Step", step)
+        print_puzzle(current)
+        
+        x, y = find_blank(current)
+
+        # simple move toward goal
+        if x < 2 and current[x+1][y] != goal[x][y]:
+            current = move(current, x, y, x+1, y)
+        elif y < 2:
+            current = move(current, x, y, x, y+1)
+        else:
+            break
+        
+        step += 1
+
+    print("Step", step)
+    print_puzzle(goal)
+
+# Initial State
+start = [[1,2,3],
+         [4,0,6],
+         [7,5,8]]
+
+solve(start)
