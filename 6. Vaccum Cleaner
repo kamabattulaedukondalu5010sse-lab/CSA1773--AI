@@ -1,0 +1,48 @@
+# Vacuum Cleaner Problem
+
+# Taking user input
+room_A = int(input("Enter status of Room A (1-Dirty, 0-Clean): "))
+room_B = int(input("Enter status of Room B (1-Dirty, 0-Clean): "))
+vacuum_pos = input("Enter vacuum location (A/B): ")
+
+print("\nInitial State")
+print("Room A:", "Dirty" if room_A==1 else "Clean")
+print("Room B:", "Dirty" if room_B==1 else "Clean")
+print("Vacuum Location:", vacuum_pos)
+
+# Cleaning process
+if vacuum_pos == 'A':
+    
+    if room_A == 1:
+        print("\nCleaning Room A")
+        room_A = 0
+    else:
+        print("\nRoom A already Clean")
+    
+    print("Moving to Room B")
+    
+    if room_B == 1:
+        print("Cleaning Room B")
+        room_B = 0
+    else:
+        print("Room B already Clean")
+
+elif vacuum_pos == 'B':
+    
+    if room_B == 1:
+        print("\nCleaning Room B")
+        room_B = 0
+    else:
+        print("\nRoom B already Clean")
+    
+    print("Moving to Room A")
+    
+    if room_A == 1:
+        print("Cleaning Room A")
+        room_A = 0
+    else:
+        print("Room A already Clean")
+
+print("\nFinal State")
+print("Room A:", "Clean")
+print("Room B:", "Clean")
