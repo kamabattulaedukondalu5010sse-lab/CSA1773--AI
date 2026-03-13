@@ -1,0 +1,68 @@
+from collections import deque
+
+# Check whether the state is valid
+def is_valid(m, c, total_m, total_c):
+    if m < 0 or c < 0 or m > total_m or c > total_c:
+        return False
+    
+    if m > 0 and c > m:
+        return False
+    
+    if (total_m - m) > 0 and (total_c - c) > (total_m - m):
+        return False
+    
+    return True
+
+
+def solve(total_m, total_c):
+
+    start = (total_m, total_c, 1)
+    goal = (0, 0, 0)
+
+    moves = [(1,0),(2,0),(0,1),(0,2),(1,1)]
+
+    queue = deque([(start, [])])
+    visited = set()
+
+    while queue:
+        (m,c,boat), path = queue.popleft()
+
+        if (m,c,boat) == goal:
+            return path + [(m,c,boat)]
+
+        if (m,c,boat) in visited:
+            continue
+
+        visited.add((m,c,boat))
+
+        for dm, dc in moves:
+
+            if boat == 1:
+                new_m = m - dm
+                new_c = c - dc
+                new_boat = 0
+            else:
+                new_m = m + dm
+                new_c = c + dc
+                new_boat = 1
+
+            if is_valid(new_m, new_c, total_m, total_c):
+                queue.append(((new_m,new_c,new_boat), path + [(m,c,boat)]))
+
+    return None
+
+
+# -------- User Input --------
+m = int(input("Enter number of Missionaries: "))
+c = int(input("Enter number of Cannibals: "))
+
+result = solve(m,c)
+
+if result:
+    print("\nSolution Steps:")
+    for step in result:
+        ml, cl, boat = step
+        side = "Left" if boat==1 else "Right"
+        print("Missionaries Left:", ml, "Cannibals Left:", cl, "Boat:", side)
+else:
+    print("No solution found")
