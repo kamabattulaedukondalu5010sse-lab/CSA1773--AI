@@ -1,0 +1,22 @@
+# Simple Decision Tree Example
+
+def decision_tree(age, income):
+
+    if age < 30:
+        if income < 40000:
+            return "No"
+        else:
+            return "Yes"
+    else:
+        if income < 70000:
+            return "No"
+        else:
+            return "Yes"
+
+
+age = int(input("Enter Age: "))
+income = int(input("Enter Income: "))
+
+result = decision_tree(age, income)
+
+print("Decision:", result)
