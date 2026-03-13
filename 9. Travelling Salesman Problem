@@ -1,0 +1,36 @@
+from itertools import permutations
+
+n = int(input("Enter number of cities: "))
+
+print("Enter distance matrix:")
+
+graph = []
+for i in range(n):
+    row = list(map(int, input().split()))
+    graph.append(row)
+
+start = int(input("Enter starting city (0 to n-1): "))
+
+cities = list(range(n))
+cities.remove(start)
+
+min_cost = float('inf')
+best_path = None
+
+for p in permutations(cities):
+    
+    current_cost = 0
+    k = start
+
+    for j in p:
+        current_cost += graph[k][j]
+        k = j
+
+    current_cost += graph[k][start]
+
+    if current_cost < min_cost:
+        min_cost = current_cost
+        best_path = (start,) + p + (start,)
+
+print("\nMinimum Cost:", min_cost)
+print("Best Path:", best_path)
