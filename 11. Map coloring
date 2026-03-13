@@ -1,0 +1,48 @@
+# Map Coloring using CSP
+
+# Regions of the map
+regions = ['A', 'B', 'C', 'D']
+
+# Possible colors
+colors = ['Red', 'Green', 'Blue']
+
+# Adjacency list (neighbors)
+neighbors = {
+    'A': ['B', 'C'],
+    'B': ['A', 'C', 'D'],
+    'C': ['A', 'B', 'D'],
+    'D': ['B', 'C']
+}
+
+solution = {}
+
+def is_safe(region, color):
+    for neighbor in neighbors[region]:
+        if neighbor in solution and solution[neighbor] == color:
+            return False
+    return True
+
+def map_coloring(index):
+    if index == len(regions):
+        return True
+
+    region = regions[index]
+
+    for color in colors:
+        if is_safe(region, color):
+            solution[region] = color
+
+            if map_coloring(index + 1):
+                return True
+
+            del solution[region]
+
+    return False
+
+
+if map_coloring(0):
+    print("Map Coloring Solution:")
+    for region in solution:
+        print(region, "->", solution[region])
+else:
+    print("No solution found")
